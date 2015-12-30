@@ -12,13 +12,30 @@ var cipherKey *string = flag.String("key", "abcdefghijklmnopqrstuvwxyz", "The ke
 
 func main() {
 	flag.Parse()
-	if len(*cipherKey) != 26 {
-		fmt.Println("ERROR: cipher key must contain 26 characters but contains", len(*cipherKey))
-		os.Exit(1)
-	}
 
 	key := []byte(*cipherKey)
 
+	// Make sure key is in key space (one of each in the set A-Z)
+	if len(key) != 26 {
+		fmt.Println("ERROR: cipher key must contain 26 characters but contains", len(key))
+		os.Exit(1)
+	}
+	keyCharsSeen := make(map[byte]bool)
+	for _, c := range key {
+		if c < 'a' || c > 'z' {
+			fmt.Println("ERROR: Invalid character", string(c), "in key.")
+			os.Exit(1)
+		}
+		_, seen := keyCharsSeen[c]
+		if !seen {
+			keyCharsSeen[c] = true
+		} else {
+			fmt.Println("ERROR: Invalid key. Duplicate character", string(c))
+			os.Exit(1)
+		}
+	}
+
+	// Decode
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		c, err := reader.ReadByte()
