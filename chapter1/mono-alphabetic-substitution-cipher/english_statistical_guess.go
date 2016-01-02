@@ -71,21 +71,19 @@ func (fs *frequencySorter) Swap(i, j int) {
 }
 
 func main() {
-	/*
-		byFrequency := &frequencySorter{
-			frequencies: averageLetterFreq,
-			by: func(a, b *letterFrequency) bool {
-				return a.frequency > b.frequency
-			},
-		}
+	byFrequency := &frequencySorter{
+		frequencies: averageLetterFreq,
+		by: func(a, b *letterFrequency) bool {
+			return a.frequency > b.frequency
+		},
+	}
 
-		sort.Sort(byFrequency)
+	sort.Sort(byFrequency)
 
-		fmt.Println("By Frequency")
-		for _, v := range averageLetterFreq {
-			fmt.Printf("%v: %.2f\n", v.letter, v.frequency)
-		}
-	*/
+	fmt.Println("By Frequency")
+	for _, v := range averageLetterFreq {
+		fmt.Printf("%v: %.2f\n", v.letter, v.frequency)
+	}
 
 	for {
 		var f float64

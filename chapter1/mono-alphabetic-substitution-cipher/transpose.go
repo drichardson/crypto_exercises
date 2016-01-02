@@ -44,7 +44,6 @@ func main() {
 		rows = append(rows, Row{columns})
 	}
 
-	fmt.Println("max col", maxCol)
 	for i := 0; i < maxCol; i++ {
 		for j, row := range rows {
 			if j > 0 {
