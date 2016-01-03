@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"sort"
-	"strconv"
 )
 
 func main() {
@@ -28,22 +26,13 @@ func main() {
 		freq[string(c)] = freq[string(c)] + 1
 	}
 
-	var keys []string
-	for k := range freq {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-
 	var total int
 	for _, v := range freq {
 		total += v
 	}
 
-	fmt.Println("Total Characters: ", total)
-	fmt.Println("Character, Count, %")
-	for _, key := range keys {
-		percentage := 100.0 * float64(freq[key]) / float64(total)
-		percentageDisplay := strconv.FormatFloat(percentage, 'f', 1, 64)
-		fmt.Println(key, freq[key], percentageDisplay)
+	for k, v := range freq {
+		percentage := 100.0 * float64(v) / float64(total)
+		fmt.Printf("%s\t%d\t%.1f\n", k, v, percentage)
 	}
 }

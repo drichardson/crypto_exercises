@@ -5,12 +5,9 @@ set -e
 go build frequency_distribution.go
 go build transpose.go
 
-echo SORTED FREQUENCIES
-paste -d " " <(cat ciphertext | ./frequency_distribution|tail -n +3|sort -k 2 -n -r) <(cat english_text_stats.txt|sort -n -k 2 -r)|./transpose|./transpose
+#paste -d " " <(cat english_text_stats.txt|sort -n -k 2 -r) <(cat ciphertext | ./frequency_distribution|tail -n +3|sort -k 2 -n -r) |./transpose|./transpose
 
-echo KEY
 paste \
-    <(cat english_text_stats.txt |sort -k 2 -n -r|cut -f 1 -d ' ') \
-    <(cat ciphertext |./frequency_distribution|tail -n +3|sort -k 2 -n -r|cut -f 1 -d ' ') \
-    | \
-    ./transpose |./transpose|sort|cut -f 2 -d ' '|./transpose|tr -d ' '|tr [A-Z] [a-z]
+    <(cat english_text_stats.txt |sort -k 2 -n -r|cut -f 1) \
+    <(cat ciphertext |./frequency_distribution|sort -k 2 -n -r|cut -f 1)  \
+    | ./transpose | tr -d ' '
