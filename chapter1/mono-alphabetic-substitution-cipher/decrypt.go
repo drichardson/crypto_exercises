@@ -47,6 +47,10 @@ func main() {
 			break
 		}
 		if c < 'A' || c > 'Z' {
+			if c != '\n' && c != ' ' {
+				fmt.Printf("\nERROR. Invalid character %v in input.", c)
+				os.Exit(1)
+			}
 			// cipher text can only be A-Z. Pass through everything else.
 			fmt.Print(string(c))
 			continue
