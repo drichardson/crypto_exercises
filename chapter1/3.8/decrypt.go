@@ -36,6 +36,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	if len(key) != 256/8 {
+		fmt.Println("ERROR, expected key length to be 256 bits but got ", len(key)*8)
+		os.Exit(1)
+	}
+
 	cipher, err := aes.NewCipher(key)
 	if err != nil {
 		fmt.Println("Error creating AES cipher.", err)
@@ -44,5 +49,5 @@ func main() {
 
 	plaintext := make([]byte, cipher.BlockSize())
 	cipher.Decrypt(plaintext, ciphertext)
-	fmt.Println("Decrypted Hex: ", hex.EncodeToString(plaintext))
+	fmt.Println(hex.EncodeToString(plaintext))
 }
