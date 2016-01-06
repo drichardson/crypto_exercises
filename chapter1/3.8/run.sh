@@ -1,3 +1,9 @@
 #!/bin/bash
 
-go run ./decrypt.go -key 8000000000000000000000000000000000000000000000000000000000000001 -ciphertext 539B333B39706D149028CFE1D9D4A407
+make
+
+echo Go decrypt
+go run ./decrypt.go | xxd -p
+
+echo libtom decrypt
+./decrypt-libtom | xxd -p

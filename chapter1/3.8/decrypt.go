@@ -2,44 +2,22 @@ package main
 
 import (
 	"crypto/aes"
-	"encoding/hex"
-	"flag"
 	"fmt"
 	"os"
 )
 
-var keyHex *string = flag.String("key", "", "AES key as a hex string.")
-var ciphertextHex *string = flag.String("ciphertext", "", "Ciphertext to decrypt.")
+var ciphertext []byte = []byte{
+	0x53, 0x9b, 0x33, 0x3b, 0x39, 0x70, 0x6d, 0x14, 0x90, 0x28, 0xcf, 0xe1,
+	0xd9, 0xd4, 0xa4, 0x07,
+}
+
+var key []byte = []byte{
+	0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01,
+}
 
 func main() {
-	flag.Parse()
-
-	if *keyHex == "" {
-		fmt.Println("Missing key")
-		os.Exit(1)
-	}
-
-	if *ciphertextHex == "" {
-		fmt.Println("Missing ciphertext")
-		os.Exit(1)
-	}
-
-	key, err := hex.DecodeString(*keyHex)
-	if err != nil {
-		fmt.Println("Error decoding hex key.", err)
-		os.Exit(1)
-	}
-
-	ciphertext, err := hex.DecodeString(*ciphertextHex)
-	if err != nil {
-		fmt.Println("Error decoding hex ciphertext.", err)
-		os.Exit(1)
-	}
-
-	if len(key) != 256/8 {
-		fmt.Println("ERROR, expected key length to be 256 bits but got ", len(key)*8)
-		os.Exit(1)
-	}
 
 	cipher, err := aes.NewCipher(key)
 	if err != nil {
@@ -49,5 +27,5 @@ func main() {
 
 	plaintext := make([]byte, cipher.BlockSize())
 	cipher.Decrypt(plaintext, ciphertext)
-	fmt.Println(hex.EncodeToString(plaintext))
+	os.Stdout.Write(plaintext)
 }
