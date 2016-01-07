@@ -1,3 +1,6 @@
 [submodule "crypto-engineering/3.8/libtomcrypt"]
 	path = crypto-engineering/3.8/libtomcrypt
 	url = https://github.com/libtom/libtomcrypt.git
+[submodule "crypto-engineering/3.9/libtomcrypt"]
+	path = crypto-engineering/3.9/libtomcrypt
+	url = https://github.com/libtom/libtomcrypt.git
