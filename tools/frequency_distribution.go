@@ -19,10 +19,6 @@ func main() {
 			}
 			break
 		}
-		if c < 'A' || c > 'Z' {
-			// cipher text can only be A-Z. Ignore everything else.
-			continue
-		}
 		freq[string(c)] = freq[string(c)] + 1
 	}
 
@@ -32,7 +28,6 @@ func main() {
 	}
 
 	for k, v := range freq {
-		percentage := 100.0 * float64(v) / float64(total)
-		fmt.Printf("%s\t%d\t%.1f\n", k, v, percentage)
+		fmt.Printf("%s\t%d\n", k, v)
 	}
 }
