@@ -8,6 +8,8 @@ OP=$1
 
 usage() {
     echo "Usage: cipher.sh <KEY> <e|d>"
+    echo "Example:"
+    echo "  substitution_cipher.sh ABCDEFGHIJKLMNOPQRSTUVWXYZ e"
 }
 
 if [ "${#KEY}" != 26 ]; then
