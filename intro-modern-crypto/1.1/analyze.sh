@@ -24,6 +24,6 @@ n_most_frequent_patterns() {
     patternfreq $length | grep -v "\t1$" | sort -k 2 -n | tail -n $n
 }
 
-for x in 2 3 4 5 6; do
-    tr -d '\n' < ciphertext | n_most_frequent_patterns 5 $x
+for x in 2 3 4 5 6 7 8 9 10; do
+    tr -d '\n' < "$INPUT" | n_most_frequent_patterns 10 $x
 done
