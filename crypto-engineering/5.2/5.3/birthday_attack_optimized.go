@@ -7,7 +7,6 @@ import (
 	"encoding/hex"
 	"flag"
 	"fmt"
-	"hash"
 	"os"
 	"runtime/pprof"
 )
@@ -42,13 +41,7 @@ func main() {
 		}()
 	}
 
-	// Hash input
-	h, err := NewSha512n(int(*nBits))
-	if err != nil {
-		fmt.Println("Error creating sha512n.", err)
-		os.Exit(1)
-	}
-	item1, item2, digest := birthdayAttack(h, *nBits)
+	item1, item2, digest := birthdayAttack(*nBits)
 	if item1 != nil {
 		fmt.Println("Found collision:")
 		fmt.Println("item1: ", hex.EncodeToString(item1))
@@ -80,7 +73,7 @@ func digestToIndex(digest []byte) uint64 {
 }
 
 // Perform birthday attack on 8, 16, 24, 32, 40, or 48 bit SHA-512-n digest.
-func birthdayAttack(h hash.Hash, nBits uint) (item1, item2, digestOut []byte) {
+func birthdayAttack(nBits uint) (item1, item2, digestOut []byte) {
 	// i is 64 bits. Since 2^64 > 2^48 (the largest SHA-512-n digest)
 	// at least one collision will be found due to the pigeon hole principle.
 	// There's a ~50% chance of finding such a collision in the first 2^(n/2)
