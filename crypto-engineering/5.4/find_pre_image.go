@@ -14,6 +14,7 @@ import (
 
 var digestHexStr = flag.String("digest", "A9", "Find a pre-image that hashes to this digest value. Must be between 1 and 6 bytes.")
 var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
+var div = flag.Uint("div", 0, "Divide 64-bit collision search space into 2^div buckets each with 2^(64-div) items. Must be between 1 and 63")
 
 func main() {
 	flag.Parse()
@@ -38,7 +39,12 @@ func main() {
 		log.Fatalln("Invalid value for n.")
 	}
 
-	pre := findPreImage(digest)
+	if d := *div; d > 64 {
+		log.Fatalln("Invalid value for div.")
+	}
+
+	//pre := findPreImage(digest)
+	pre := findPreImageConcurrent(digest, *div)
 	if pre != nil {
 		fmt.Println(hex.EncodeToString(pre))
 	} else {
@@ -68,6 +74,56 @@ func findPreImage(digest []byte) []byte {
 	}
 
 	return nil
+}
+
+func findPreImageConcurrent(digest []byte, div uint) []byte {
+	// Divide the search 64 bit search space findPreImageInRange can use
+	// into 2^div buckets, each with 2^(64-div) items.
+	// 2^div * 2^(64-div) = 2^(div+64-div) = 2^64.
+	buckets := uint64(1) << div
+	bucketSize := uint64(1) << (64 - div)
+	result := make(chan []byte)
+
+	for i := uint64(0); i < buckets; i++ {
+		i := i
+		go func() {
+			start := i * bucketSize
+			end := (i+1)*bucketSize - 1
+			findPreImageInRange(digest, start, end, result)
+		}()
+	}
+
+	for i := uint64(0); i < buckets; i++ {
+		preimage := <-result
+		if preimage != nil {
+			return preimage
+		}
+	}
+
+	return nil
+}
+
+func findPreImageInRange(digest []byte, start, end uint64, out chan []byte) {
+	digestLen := len(digest)
+	var dataBuf [8]byte
+	data := dataBuf[:]
+
+	for i := start; ; i++ {
+		uint64ToBytes(i+start, &dataBuf)
+		dataDigestArray := sha512.Sum512(data)
+		dataDigest := dataDigestArray[:digestLen]
+
+		if bytes.Equal(dataDigest, digest) {
+			out <- data[:]
+			return
+		}
+
+		if i == end {
+			break
+		}
+	}
+
+	out <- nil
 }
 
 func uint64ToBytes(u uint64, out *[8]byte) {
