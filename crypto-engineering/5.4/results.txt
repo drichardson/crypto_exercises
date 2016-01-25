@@ -1,0 +1,124 @@
+DIGEST: A9
+Run 1
+0000000000000017
+
+real0m0.006s
+user0m0.001s
+sys0m0.003s
+Run 2
+0000000000000017
+
+real0m0.005s
+user0m0.001s
+sys0m0.003s
+Run 3
+0000000000000017
+
+real0m0.005s
+user0m0.001s
+sys0m0.003s
+Run 4
+0000000000000017
+
+real0m0.005s
+user0m0.001s
+sys0m0.003s
+Run 5
+0000000000000017
+
+real0m0.005s
+user0m0.001s
+sys0m0.003s
+DIGEST: 3D4B
+Run 1
+8000000000004942
+
+real0m0.032s
+user0m0.197s
+sys0m0.006s
+Run 2
+8000000000004942
+
+real0m0.032s
+user0m0.193s
+sys0m0.007s
+Run 3
+8000000000004942
+
+real0m0.034s
+user0m0.197s
+sys0m0.006s
+Run 4
+8000000000004942
+
+real0m0.031s
+user0m0.199s
+sys0m0.005s
+Run 5
+8000000000004942
+
+real0m0.032s
+user0m0.194s
+sys0m0.006s
+DIGEST: 3A7F27
+Run 1
+0000000000033f84
+
+real0m0.291s
+user0m2.251s
+sys0m0.007s
+Run 2
+0000000000033f84
+
+real0m0.312s
+user0m2.234s
+sys0m0.007s
+Run 3
+0000000000033f84
+
+real0m0.310s
+user0m2.238s
+sys0m0.007s
+Run 4
+0000000000033f84
+
+real0m0.302s
+user0m2.258s
+sys0m0.008s
+Run 5
+0000000000033f84
+
+real0m0.303s
+user0m2.260s
+sys0m0.007s
+DIGEST: C3C0357C
+Run 1
+800000001afafef2
+
+real10m19.100s
+user77m54.818s
+sys0m7.032s
+Run 2
+800000001afafef2
+
+real10m14.765s
+user77m47.693s
+sys0m6.566s
+Run 3
+800000001afafef2
+
+real10m18.406s
+user77m53.040s
+sys0m7.032s
+Run 4
+800000001afafef2
+
+real10m8.801s
+user77m50.565s
+sys0m4.442s
+Run 5
+800000001afafef2
+
+real10m14.161s
+user77m40.175s
+sys0m5.699s
