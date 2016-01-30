@@ -10,10 +10,12 @@ import (
 	"math"
 	"os"
 	"runtime/pprof"
+	"runtime/trace"
 )
 
 var digestHexStr = flag.String("digest", "A9", "Find a pre-image that hashes to this digest value. Must be between 1 and 6 bytes.")
-var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
+var cpuprofile = flag.String("cpuprofile", "", "Write cpu profile to file")
+var traceFilename = flag.String("trace", "", "Write trace to file.")
 var div = flag.Uint("div", 0, "Divide 64-bit collision search space into 2^div buckets each with 2^(64-div) items. Must be between 1 and 63")
 
 func main() {
@@ -24,10 +26,25 @@ func main() {
 		if err != nil {
 			log.Fatalln("Error creating file for profile.", err)
 		}
-		pprof.StartCPUProfile(f)
+		err = pprof.StartCPUProfile(f)
+		if err != nil {
+			log.Fatalln("Error starting CPU profile.", err)
+		}
 		// defer adds to list of things to execute when surrounding
 		// function (not lexical block) returns.
 		defer pprof.StopCPUProfile()
+	}
+
+	if *traceFilename != "" {
+		f, err := os.Create(*traceFilename)
+		if err != nil {
+			log.Fatalln("Error creating file for trace.", err)
+		}
+		err = trace.Start(f)
+		if err != nil {
+			log.Fatalln("Error starting trace.", err)
+		}
+		defer trace.Stop()
 	}
 
 	digest, err := hex.DecodeString(*digestHexStr)
