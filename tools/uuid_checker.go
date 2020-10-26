@@ -23,7 +23,7 @@ func main() {
 				collisionCount++
 				fmt.Printf("%d collisions for UUID %v\n", collisions[u], u)
 			} else {
-				collisions[u] = 1
+				collisions[u] = 0
 			}
 		} else {
 			fmt.Println("Error: %v\n", err)
